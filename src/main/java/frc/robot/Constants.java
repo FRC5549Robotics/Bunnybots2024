@@ -137,15 +137,26 @@ public final class Constants {
     public static final double SENSOR_VOLTAGE_THRESHOLD = 0.18;
     public static final int INDEXER_LED_STRIP_LENGTH = 69;
 
-    //Intake Constants
-    public static final int INTAKE_MOTOR_BOTTOM = 23; 
-    public static final int INTAKE_MOTOR_TOP = 24; 
-    public static final int INTAKE_TRIGGER = 2;
-    public static final double INTAKE_DEADBAND = 0.05;
-    public static final double INTAKE_SCALING_FACTOR = 0.8;
-    public static final int INTAKE_SHOOTER_BUTTON = 5;
-    public static final double INTAKE_OUTTAKE_SPEED = 0.5;
+ //Shintake
+ public static final int SHINTAKE_MOTOR = 21;
+ public static final double kP = 0.46416;
+ public static final double kI = 0;
+ public static final double kD = 0;
+ public static final double kS = 0.020963;
+ public static final double kV = 0.18825;
+ public static final double kA = 0.013596;
+ public static final double tP = 1/27;
+ public static final int SHOOT_TRIGGER = 2;
+ public static final int INTAKE_BUTTON = 3;
+ public static final int SHOOT_BUTTON = 4;
+ public static final int INDEX_OUT = 1;
 
+ //Shooter Solenoids
+ public static final int SHOOTER_SOLENOID_FORWARD = 6;
+ public static final int SHOOTER_SOLENOID_REVERSE = 7;
+ public static final int PNEUMATIC_BUTTON  = 8;
+
+ public static final double SHINTAKE_SPEED = 0.75;
     //Shooter Constants
     public static final int SHOOTER_LEFT_MOTOR = 25;
     public static final int SHOOTER_RIGHT_MOTOR = 26;
