@@ -17,8 +17,10 @@ public class DumpnDrive extends SequentialCommandGroup {
   /** Creates a new DumpnDrive. */
   public DumpnDrive(Shintake shintake, PathPlannerPath traj) {
     // Use addRequirements() here to declare subsystem dependencies.
+    System.out.println("DumpnDrive");
+    
     addCommands(
-      new InstantCommand(shintake::shintake_back),
+      new InstantCommand(shintake::shintake_shoot),
       AutoBuilder.followPath(traj)
     );
   }
