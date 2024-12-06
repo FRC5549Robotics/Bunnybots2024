@@ -18,9 +18,8 @@ import frc.robot.Constants;
 public class Pivot extends SubsystemBase {
 
   public enum PivotTarget{
-    Retracted,
     Intake,
-    Amp
+    Shoot
   }
 
   CANSparkMax PivotRightMotor;
@@ -70,8 +69,8 @@ public class Pivot extends SubsystemBase {
   }
 
   public void autonPivotIn() {
-    PivotRightMotor.set(-controllerRight.calculate(RightThroughbore.getDistance(), Constants.PIVOT_RIGHT_RETRACTED_SETPOINT));
-    PivotLeftMotor.set(-controllerLeft.calculate(LeftThroughbore.getDistance(), Constants.PIVOT_LEFT_RETRACTED_SETPOINT));
+    PivotRightMotor.set(-controllerRight.calculate(RightThroughbore.getDistance(), Constants.PIVOT_RIGHT_INTAKE_SETPOINT));
+    PivotLeftMotor.set(-controllerLeft.calculate(LeftThroughbore.getDistance(), Constants.PIVOT_LEFT_INTAKE_SETPOINT));
   }
   
   public void checkLag(double leftSetpoint, double rightSetpoint) {

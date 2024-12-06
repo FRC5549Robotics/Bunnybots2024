@@ -230,7 +230,7 @@ public class SwerveModule extends SubsystemBase {
         
         SmartDashboard.putNumber("Module Speeds", m_driveEncoder.getVelocity());
 
-        m_driveController.setReference(driveOutput, ControlType.kVelocity, 0, 0);//Constants.kDriveFF * driveOutput);
+        m_driveController.setReference(driveOutput/Constants.kMaxSpeedMetersPerSecond, ControlType.kDutyCycle, 0, 0.0);
     }
 
     public void setOpenLoopState(SwerveModuleState state) {

@@ -5,7 +5,9 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants; 
+import frc.robot.Constants;
+
+import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -19,50 +21,40 @@ public class Shintake extends SubsystemBase {
   /** Creates a new Shintake. */
   CANSparkMax motor_shintake;
   PIDController pid = new PIDController(Constants.kP, Constants.kI, Constants.kD);
-  SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.kS, Constants.kV, Constants.kA);
   double targetRPM;
   Compressor pcmCompressor;
   DoubleSolenoid shooterSolenoid;
+  CANSparkFlex topFront, topBack, bottomFront;
+  CANSparkMax bottomBack;
+
 
   public Shintake() {
-    motor_shintake = new CANSparkMax(Constants.SHINTAKE_MOTOR , MotorType.kBrushless);
-    targetRPM = 111000;
-    pcmCompressor = new Compressor(PneumaticsModuleType.CTREPCM);    
-    pcmCompressor.enableDigital();
-    pcmCompressor.disable(); //disables pneumadics
-    shooterSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.SHOOTER_SOLENOID_FORWARD, Constants.SHOOTER_SOLENOID_REVERSE);
-    boolean enabled = pcmCompressor.isEnabled();
-    System.out.println(pcmCompressor.isEnabled());
-    boolean pressureSwitch = pcmCompressor.getPressureSwitchValue();
-    double current = pcmCompressor.getCurrent();
-    shooterSolenoid.set(Value.kForward);
+    topFront = new CANSparkFlex(Constants.SHINTAKE_TOP_FRONT_MOTOR, MotorType.kBrushless);
+    topBack = new CANSparkFlex(Constants.SHINTAKE_TOP_BACK_MOTOR, MotorType.kBrushless);
+    bottomFront = new CANSparkFlex(Constants.SHINTAKE_BOTTOM_FRONT_MOTOR, MotorType.kBrushless);
+    bottomBack = new CANSparkMax(Constants.SHINTAKE_BOTTOM_BACK_MOTOR, MotorType.kBrushless);
   }
-  public void extend(){
-    shooterSolenoid.set(Value.kForward);
-  }
-  public void retract(){
-    shooterSolenoid.set(Value.kReverse);
-  }
-  public void shintake_run(){
-    motor_shintake.set(-Constants.SHINTAKE_SPEED);
+  public void shintake_intake(){
+    topFront.set(Constants.SHINTAKE_INTAKE_SPEED);
+    topBack.set(Constants.SHINTAKE_INTAKE_SPEED);
+    bottomFront.set(-Constants.SHINTAKE_INTAKE_SPEED);
+    bottomBack.set(-Constants.SHINTAKE_INTAKE_SPEED);
   }
 
-  public void shintake_back(){
-    motor_shintake.set(Constants.SHINTAKE_SPEED);
+  public void shintake_shoot(){
+    topFront.set(-Constants.SHINTAKE_SHOOT_SPEED);
+    topBack.set(-Constants.SHINTAKE_SHOOT_SPEED);
+    bottomFront.set(Constants.SHINTAKE_SHOOT_SPEED);
+    bottomBack.set(Constants.SHINTAKE_SHOOT_SPEED);
   }
 
-  public void shintake_stop(){
-    motor_shintake.set(0);
+  public void off(){
+    topFront.set(0);
+    topBack.set(0);
+    bottomFront.set(0);
+    bottomBack.set(0);
   }
   
-  public void shintake_set_speed(double speed){
-    motor_shintake.set(speed);
-  }
-  public void on(double setPoint) {
-    
-    targetRPM = setPoint;
-    motor_shintake.setVoltage(pid.calculate((motor_shintake.getEncoder().getVelocity() * (1 / (1.43 * 60))), setPoint) + feedforward.calculate(setPoint));
-  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

@@ -19,21 +19,22 @@ public final class Constants {
     public static final int DRIVE_CONTROLLER = 0;
     public static final int OPERATOR_CONTROLLER = 1;
 
-    public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 4; 
-    public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 3;
-    public static final int FRONT_LEFT_MODULE_STEER_ENCODER = 10; 
+    public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 2; 
+    public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 1;
+    public static final int FRONT_LEFT_MODULE_STEER_ENCODER = 13
+    ; 
 
-    public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 2;  
-    public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 1;
-    public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 13; 
+    public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 4;  
+    public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 3;
+    public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 10; 
 
-    public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 6; 
-    public static final int BACK_LEFT_MODULE_STEER_MOTOR = 5; 
-    public static final int BACK_LEFT_MODULE_STEER_ENCODER = 12; 
+    public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 8; 
+    public static final int BACK_LEFT_MODULE_STEER_MOTOR = 7; 
+    public static final int BACK_LEFT_MODULE_STEER_ENCODER = 11; 
 
-    public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 8; 
-    public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 7; 
-    public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 11;  
+    public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 6; 
+    public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 5; 
+    public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 12;  
 
     // Define the conventional order of our modules when putting them into arrays
     public static final int FRONT_LEFT =0;
@@ -60,7 +61,7 @@ public final class Constants {
 
     public static final double kTurnPositionConversionFactor = 12.8;
 
-    public static final double kMaxSpeedMetersPerSecond = 6.0;
+    public static final double kMaxSpeedMetersPerSecond = 4;
     // Units are meters.
     // Distance between centers of right and left wheels on robot
     public static final double kTrackWidth = 0.56515;
@@ -82,13 +83,15 @@ public final class Constants {
     // Positive x values represent moving toward the front of the robot 
     // Positive y values represent moving toward the left of the robot.
     public static final SwerveDriveKinematics kDriveKinematics =
-        new SwerveDriveKinematics(
-            new Translation2d(kWheelBase / 2.0, kTrackWidth / 2.0),   // front left
-            new Translation2d(kWheelBase / 2.0, -kTrackWidth / 2.0),  // front right
-            new Translation2d(-kWheelBase / 2.0, kTrackWidth / 2.0),  // rear left
-            new Translation2d(-kWheelBase / 2.0, -kTrackWidth / 2.0)  // rear right
-            );
+    new SwerveDriveKinematics(
+        new Translation2d(kWheelBase / 2.0, kTrackWidth / 2.0),   // front left
+        new Translation2d(kWheelBase / 2.0, -kTrackWidth / 2.0),  // front right
+        new Translation2d(-kWheelBase / 2.0, kTrackWidth / 2.0),  // rear left
+        new Translation2d(-kWheelBase / 2.0, -kTrackWidth / 2.0)  // rear right
+        );
 
+
+        
     public static final boolean kGyroReversed = false;
 
     public static final double kDriveP = 0.05;
@@ -102,96 +105,36 @@ public final class Constants {
     public static final double kAcceleration = 4;
 
     public static final int RESET_NAVX_BUTTON = 4;
-    public static final double ROBOT_ORIENTED_DEADBAND = 0.15;
-
 
     //Pivot Constants
-    public static final double PIVOT_DEPLOY_SETPOINT = 1;
-    public static final double PIVOT_STOW_SETPOINT = 0;
-    public static final int DEPLOY_PIVOT_BUTTON = 1;
-    public static final int RETRACT_PIVOT_BUTTON = 4;
+    public static final int SHOOT_PIVOT_BUTTON = 1;
+    public static final int INTAKE_PIVOT_BUTTON = 4;
     public static final int PIVOT_MOTOR_LEFT = 20;
     public static final int PIVOT_MOTOR_RIGHT = 21;
     public static final int PIVOT_JOYSTICK = 1;
     public static final double PIVOT_DEADBAND = 0.05;
     public static final double PIVOT_SCALING_FACTOR = 0.15;
-    public static final double PIVOT_RIGHT_RETRACTED_SETPOINT = 1;
-    public static final double PIVOT_LEFT_RETRACTED_SETPOINT = -1;
+    public static final double PIVOT_RIGHT_SHOOT_SETPOINT = 12.0;
+    public static final double PIVOT_LEFT_SHOOT_SETPOINT = -15.1;
     public static final double PIVOT_RIGHT_INTAKE_SETPOINT = 102.5;
     public static final double PIVOT_LEFT_INTAKE_SETPOINT = -107.2;
     public static final int PIVOT_ENCODER_RIGHT = 4;
-    public static final int PIVOT_ENCODER_LEFT = 0;
-    public static final double PIVOT_OFFSET_RIGHT = 0.331;
-    public static final double PIVOT_OFFSET_LEFT = 0.769;
-    public static final double PIVOT_RIGHT_AMP_SETPOINT = 0;
-    public static final double PIVOT_LEFT_AMP_SETPOINT = 0;
-    public static final int AMP_SHOOTER_BUTTON = 3;
+    public static final int PIVOT_ENCODER_LEFT = 1;
+    public static final double PIVOT_OFFSET_RIGHT = 0.347;
+    public static final double PIVOT_OFFSET_LEFT = 0.760;
 
-
-    //Indexer Constants
-    public static final int INDEXER_MOTOR = 22;
-    public static final double INDEXER_SPEED = 1;
-    public static final double INDEXER_SPEED_OUT = 0.5;
-    public static final int INDEXER_IN_BUTTON = 2;
-    public static final int INDEXER_OUT_BUTTON = 5;
-    public static final double SENSOR_VOLTAGE_THRESHOLD = 0.18;
-    public static final int INDEXER_LED_STRIP_LENGTH = 69;
-
- //Shintake
- public static final int SHINTAKE_MOTOR = 21;
- public static final double kP = 0.46416;
- public static final double kI = 0;
- public static final double kD = 0;
- public static final double kS = 0.020963;
- public static final double kV = 0.18825;
- public static final double kA = 0.013596;
- public static final double tP = 1/27;
- public static final int SHOOT_TRIGGER = 2;
- public static final int INTAKE_BUTTON = 3;
- public static final int SHOOT_BUTTON = 4;
- public static final int INDEX_OUT = 1;
-
- //Shooter Solenoids
- public static final int SHOOTER_SOLENOID_FORWARD = 6;
- public static final int SHOOTER_SOLENOID_REVERSE = 7;
- public static final int PNEUMATIC_BUTTON  = 8;
-
- public static final double SHINTAKE_SPEED = 0.75;
-    //Shooter Constants
-    public static final int SHOOTER_LEFT_MOTOR = 25;
-    public static final int SHOOTER_RIGHT_MOTOR = 26;
-    public static final int SHOOTER_AMP_BUTTON = 2;
-    public static final int SHOOTER_INTAKE_BUTTON = 6;
-    public static final double SHOOTER_kP = 0;
-    public static final double SHOOTER_kI = 0;
-    public static final double SHOOTER_kD = 0;
-    public static final double SHOOTER_kS = 0;
-    public static final double SHOOTER_kV = 0;
-    public static final double SHOOTER_kA = 0;
-    public static final double SHOOTER_TRIGGER_THRESHOLD = 0.075;
-    public static final int SHOOTER_TRIGGER = 3;
-    public static final double SHOOTER_SET_SPEED = 1;
-
-    //Climber Constants
-    public static final int CLIMBER_MOTOR_LEFT = 27;
-    public static final int CLIMBER_MOTOR_RIGHT = 28;
-    public static final double CLIMBER_SCALING_FACTOR = 1;// placeholder
-    public static final int CLIMBER_LEFT_JOYSTICK = 1;
-    public static final int CLIMBER_RIGHT_JOYSTICK = 5;
-    public static final double CLIMBER_DEADBAND = 0.05;
-    public static final int CLIMBER_BUTTON = 1;
-    public static final double CLIMBER_LEFT_ENCODER_MAX = 1;// placeholder
-    public static final double CLIMBER_RIGHT_ENCODER_MAX = 1;// placeholder
-
-    //Deflectorinator Constants
-    public static final int DEFLECTORINATOR_MOTOR = 29;
-    public static final double kDeflectGearRatio = 20;
-    public static final int DEFLECTORINATOR_IN_BUTTON = 6;
-    public static final int DEFLECTORINATOR_OUT_BUTTON = 5;
-    public static final double DEFLECTORINATOR_SPEED = 0.1;
-    public static final double DEFLECTORINATOR_OUT_SETPOINT = -0.317857;
-    public static final double DEFLECTORINATOR_RETRACTED_SETPOINT = 0;
-
+    //Shintake
+    public static final int SHINTAKE_TOP_FRONT_MOTOR = 22;
+    public static final int SHINTAKE_TOP_BACK_MOTOR = 21;
+    public static final int SHINTAKE_BOTTOM_FRONT_MOTOR = 23;
+    public static final int SHINTAKE_BOTTOM_BACK_MOTOR = 24;
+    public static final double kP = 0.46416;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final int SHINTAKE_SHOOT_BUTTON = 0;
+    public static final int SHINTAKE_INTAKE_BUTTON = 0;
+    public static final double SHINTAKE_INTAKE_SPEED = 0.5;
+    public static final double SHINTAKE_SHOOT_SPEED = 0.9;
 
     //Limelight Constants
     public static final double Kp = 1/27;

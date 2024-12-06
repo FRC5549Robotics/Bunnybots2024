@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import java.util.Optional;
 
+import com.choreo.lib.Choreo;
+import com.choreo.lib.ChoreoTrajectory;
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
@@ -85,7 +87,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   ChassisSpeeds speeds; 
   Field2d m_field;
     
-  /** Creates a new DrivetrainSubsystem. */
+  /** Creates a new DriveSubsystem. */
   public DrivetrainSubsystem(AHRS ahrs) {
     AutoBuilder.configureHolonomic(
       this::getPose, // Robot pose supplier
@@ -146,7 +148,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
       module.syncTurningEncoders();
     }
   }
-
+  
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
@@ -290,9 +292,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
     SwerveModuleState[] swerveModuleStates =
         Constants.kDriveKinematics.toSwerveModuleStates(speeds);
 
-    // System.out.println(swerveModuleStates[0]+":"+swerveModuleStates[1]+":"+swerveModuleStates[2]+":"+swerveModuleStates[3]);
     if (normalize) normalizeDrive(swerveModuleStates, speeds);
     
+    System.out.println(swerveModuleStates[0]+":"+swerveModuleStates[1]+":"+swerveModuleStates[2]+":"+swerveModuleStates[3]);
     setModuleStates(swerveModuleStates);
   }
 
@@ -403,7 +405,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
    * @return the robot's heading as a Rotation2d
    */
   public Rotation2d getHeading() {
-    double raw_yaw = 25*Math.sin(Math.toRadians(2*m_ahrs.getYaw())) + m_ahrs.getYaw();
+    double raw_yaw = -m_ahrs.getYaw();
     // double raw_yaw = m_ahrs.getYaw();
     SmartDashboard.putNumber("Raw Yaw", raw_yaw);
     // float raw_yaw = m_ahrs.getYaw(); // Returns yaw as -180 to +180.
@@ -430,21 +432,21 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
   private SwerveModuleState[] states = Constants.kDriveKinematics.toSwerveModuleStates(m_chassisSpeeds);
 
-  // public Command ChoreoTrajectoryFollower(ChoreoTrajectory traj){
-  //   return Choreo.choreoSwerveCommand(
-  //     traj, 
-  //     this::getPose, 
-  //     new PIDController(5, 0.0, 0.0),  
-  //     new PIDController(5, 0.0, 0.0),  
-  //     new PIDController(0.35, 0.0, 0.0),  
-  //     (ChassisSpeeds speeds) -> 
-  //         drive(new ChassisSpeeds(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond, speeds.omegaRadiansPerSecond), true),
-  //     () -> {
-  //         Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
-  //             return alliance.isPresent() && alliance.get() == Alliance.Red;
-  //     },
-  //     this);
-  // }
+  public Command ChoreoTrajectoryFollower(ChoreoTrajectory traj){
+    return Choreo.choreoSwerveCommand(
+      traj, 
+      this::getPose, 
+      new PIDController(5, 0.0, 0.0),  
+      new PIDController(5, 0.0, 0.0),  
+      new PIDController(0.35, 0.0, 0.0),  
+      (ChassisSpeeds speeds) -> 
+          drive(new ChassisSpeeds(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond, speeds.omegaRadiansPerSecond), true),
+      () -> {
+          Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
+              return alliance.isPresent() && alliance.get() == Alliance.Red;
+      },
+      this);
+  }
 
   public ChassisSpeeds getChassisSpeeds() {
     return Constants.kDriveKinematics.toChassisSpeeds(

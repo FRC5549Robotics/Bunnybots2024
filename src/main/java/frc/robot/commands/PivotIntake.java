@@ -7,10 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
-import frc.robot.subsystems.Indexer;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pivot;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Pivot.PivotTarget;
 
 public class PivotIntake extends Command {
@@ -32,13 +29,9 @@ public class PivotIntake extends Command {
       leftSetpoint = Constants.PIVOT_LEFT_INTAKE_SETPOINT;
       rightSetpoint = Constants.PIVOT_RIGHT_INTAKE_SETPOINT;
     }
-    else if(target == PivotTarget.Retracted){
-      leftSetpoint = Constants.PIVOT_LEFT_RETRACTED_SETPOINT;
-      rightSetpoint = Constants.PIVOT_RIGHT_RETRACTED_SETPOINT;
-    }
-    else if(target == PivotTarget.Amp) {
-      leftSetpoint = Constants.PIVOT_LEFT_AMP_SETPOINT;
-      rightSetpoint = Constants.PIVOT_RIGHT_AMP_SETPOINT;
+    else if(target == PivotTarget.Shoot){
+      leftSetpoint = Constants.PIVOT_LEFT_SHOOT_SETPOINT;
+      rightSetpoint = Constants.PIVOT_RIGHT_SHOOT_SETPOINT;
     }
 
   }
