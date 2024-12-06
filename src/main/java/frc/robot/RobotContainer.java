@@ -65,6 +65,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
+    m_DrivetrainSubsystem.setAutonPose(Simple);
     return new DumpnDrive(m_shintake, Simple);
   }
 }
