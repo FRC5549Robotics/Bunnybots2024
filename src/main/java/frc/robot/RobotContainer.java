@@ -7,10 +7,19 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Pivot;
+import frc.robot.subsystems.Shintake;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.PathPlannerTrajectory;
+import com.pathplanner.lib.path.*;
+import com.pathplanner.lib.path.PathConstraints;
+import frc.robot.subsystems.SwerveModule;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -20,9 +29,16 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final Pivot m_pivot = new Pivot(null);
+  private final Shintake m_shintake = new Shintake();
+  private final DrivetrainSubsystem m_DrivetrainSubsystem = new DrivetrainSubsystem(null);
+  private final SwerveModule m_SwerveModule = new SwerveModule();
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
+
+
+  
+  PathPlannerPath MidtoNoteM = PathPlannerPath.fromPathFile("MidtoNoteM");
+  //Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
