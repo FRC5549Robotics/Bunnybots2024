@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+<<<<<<< HEAD
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
@@ -11,8 +12,23 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shintake;
+=======
+import frc.robot.commands.DriveCommand;
+import frc.robot.commands.PivotIntake;
+import frc.robot.subsystems.DrivetrainSubsystem;
+//import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Pivot;
+import frc.robot.subsystems.Shintake;
+import frc.robot.subsystems.Pivot.PivotTarget;
+
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.AddressableLED;
+>>>>>>> dd6dd6cdcf13ecc116d4e464f37a32fc94eab892
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.PathPlannerTrajectory;
@@ -28,6 +44,7 @@ import frc.robot.subsystems.SwerveModule;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+<<<<<<< HEAD
   // The robot's subsystems and commands are defined here...
   private final Pivot m_pivot = new Pivot(null);
   private final Shintake m_shintake = new Shintake();
@@ -41,9 +58,25 @@ public class RobotContainer {
   //Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
+=======
+  // Replace with CommandPS4Controller or CommandJoystick if needed
+  private final CommandXboxController m_controller = new CommandXboxController(Constants.DRIVE_CONTROLLER);
+  private final CommandXboxController m_controller2 = new CommandXboxController(Constants.OPERATOR_CONTROLLER);
+
+  // The robot's subsystems and commands are defined here...
+  private final AHRS m_ahrs = new AHRS();
+  public final DrivetrainSubsystem m_drive = new DrivetrainSubsystem(m_ahrs);
+  // private final Pivot m_pivot = new Pivot(m_controller2);
+  private final Shintake m_shintake = new Shintake();
+  // private final Limelight m_limelight = new Limelight(m_controller, m_drive);//Find Feedforward Constants );
+
+  JoystickButton resetNavXButton = new JoystickButton(m_controller.getHID(), Constants.RESET_NAVX_BUTTON);
+  JoystickButton shootPivotButton = new JoystickButton(m_controller.getHID(), Constants.SHOOT_PIVOT_BUTTON);
+  JoystickButton intakePivotButton = new JoystickButton(m_controller.getHID(), Constants.INTAKE_PIVOT_BUTTON);
+>>>>>>> dd6dd6cdcf13ecc116d4e464f37a32fc94eab892
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
+  public RobotContainer() { 
     // Configure the trigger bindings
     configureBindings();
   }
@@ -59,12 +92,21 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+      m_drive.setDefaultCommand(new DriveCommand(m_drive, m_controller));
+      resetNavXButton.onTrue(new InstantCommand(m_drive::zeroGyroscope));
+
+      m_controller2.leftTrigger(0.1).onTrue(new InstantCommand(m_shintake::shintake_intake));
+      m_controller2.rightTrigger(0.1).onTrue(new InstantCommand(m_shintake::shintake_shoot));
+      m_controller2.leftTrigger(0.1).negate().and(m_controller2.rightTrigger(0.1).negate()).onTrue(new InstantCommand(m_shintake::off));
+
+
+      // shootPivotButton.whileTrue(new PivotIntake(m_pivot, PivotTarget.Shoot));
+      // intakePivotButton.whileTrue(new PivotIntake(m_pivot, PivotTarget.Intake));
+      // shootPivotButton.or(intakePivotButton).onFalse(new InstantCommand(m_pivot::off));
+      // m_controller2.axisGreaterThan(Constants.PIVOT_JOYSTICK, Constants.PIVOT_DEADBAND).or(m_controller2.axisLessThan(Constants.PIVOT_JOYSTICK, -Constants.PIVOT_DEADBAND)).onTrue(new PivotAnalog(m_pivot, m_controller2)).onFalse(new InstantCommand(m_pivot::off));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
   /**
@@ -74,6 +116,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return null;
   }
 }
